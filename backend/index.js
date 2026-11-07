@@ -12,9 +12,9 @@
 const express = require("express")
 const cors = require("cors")
 // retrieve the MySQL DB Configuration Module
-const dbConnection = require("./config")
+// const dbConnection = require("./config")
 // use this library for parsing HTTP body requests
-var bodyParser = require('body-parser');
+// var bodyParser = require('body-parser');
 
 // routes
 const gamesRoutes = require("./routes/games");
@@ -40,7 +40,7 @@ app.use(express.json());
 //      format the body of HTTP Requests
 // ----------------------------------------------
 app.use(cors());
-app.use(bodyParser.json());
+// app.use(bodyParser.json());
 
 // register routes
 app.use("/games", gamesRoutes);

@@ -28,8 +28,8 @@ const mysql = require("mysql");
 const mysqlConfig = {
     host: "localhost", 
     port: 3306,
-    user: "testuser", 
-    password: "mypassword",
+    user: process.env.DB_USERNAME, 
+    password: process.env.DB_PASSWORD,
     database: "game_collection",
     debug: false // Connection debugging mode is ON
 };
