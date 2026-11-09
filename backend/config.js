@@ -10,7 +10,7 @@
 // ----------------------------------------------
 // (A) Import the MySQL module or library
 // ----------------------------------------------
-const mysql = require("mysql");
+const mysql = require("mysql2");
 
 // ----------------------------------------------
 // (B) Configure the connection options for MySQL
@@ -26,9 +26,9 @@ const mysql = require("mysql");
 // tport hat is created by XAMPP for MySQL: 3306.
 // ----------------------------------------------
 const mysqlConfig = {
-    host: "localhost", 
-    port: 3306,
-    user: process.env.DB_USERNAME, 
+    host: process.env.DB_HOST || "localhost",
+    port: process.env.DB_PORT || 3306,
+    user: process.env.DB_USERNAME,
     password: process.env.DB_PASSWORD,
     database: "game_collection",
     debug: false // Connection debugging mode is ON
@@ -39,7 +39,7 @@ const mysqlConfig = {
 //     defined in mySQLConfig (without a query)
 // ----------------------------------------------
 const dbConnection = mysql.createConnection(mysqlConfig);
-dbConnection.connect(function(err) {
+dbConnection.connect(function (err) {
     // unsucessful: handle any errors that might occur during connection
     if (err) {
         console.error('Opps. There was an error connecting to the database: ', err.stack);

@@ -1,6 +1,6 @@
 -- Drop the database if it exists and recreate it
-DROP DATABASE IF EXISTS game_collection;
-CREATE DATABASE game_collection;
+-- DROP DATABASE IF EXISTS game_collection;
+-- CREATE DATABASE game_collection;
 USE game_collection;
 
 -- Tables
