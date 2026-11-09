@@ -24,6 +24,8 @@ services:
     restart: unless-stopped
     ports:
       - "2000:2000"
+    volumes:
+      - ./frontend:/frontend:ro
     environment:
       PORT: 2000
       DB_HOST: db
