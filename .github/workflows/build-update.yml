@@ -50,11 +50,28 @@ jobs:
             releaseDate = $ReleaseDate
           } | ConvertTo-Json | Set-Content "update/application/version.json"
 
+      - name: Download portable Node.js runtime
+        shell: pwsh
+        run: |
+          $NodeVersion = "v24.15.0"
+          $Archive = "node-$NodeVersion-win-x64.zip"
+          $Url = "https://nodejs.org/dist/$NodeVersion/$Archive"
+
+          Invoke-WebRequest -Uri $Url -OutFile $Archive
+
+          Expand-Archive -Path $Archive -DestinationPath "node-extracted"
+
+          New-Item -ItemType Directory -Force -Path "update/runtime/node"
+
+          Copy-Item `
+            "node-extracted/node-$NodeVersion-win-x64/node.exe" `
+            "update/runtime/node/node.exe"
+
       - name: Create ZIP
         shell: pwsh
         run: |
           Compress-Archive `
-            -Path "update/application" `
+            -Path "update/application", "update/runtime" `
             -DestinationPath "CollectionManager-$env:GITHUB_REF_NAME.zip" `
             -CompressionLevel Optimal
 
