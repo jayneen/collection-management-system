@@ -87,11 +87,26 @@ jobs:
 
           New-Item -ItemType Directory -Force -Path "update/runtime/mysql"
 
+          # Copy the complete MySQL distribution
           Get-ChildItem -LiteralPath "mysql-extracted/mysql-$MySQLVersion-winx64" -Force |
-            Copy-Item -Destination "update/runtime/mysql" -Recurse -Force
+              Copy-Item -Destination "update/runtime/mysql" -Recurse -Force
+
+          # Remove debugging symbols and development files
+          $ExtensionsToRemove = @(
+              "*.pdb",
+              "*.lib",
+              "*.h",
+              "*.def",
+              "*.c"
+          )
+
+          foreach ($Extension in $ExtensionsToRemove) {
+              Get-ChildItem "update/runtime/mysql" -Recurse -File -Filter $Extension |
+                  Remove-Item -Force
+          }
 
           Write-Host "MySQL runtime packaged successfully."
-          
+
 
       - name: Include database setup file
         shell: pwsh
