@@ -13,82 +13,35 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Check out repository
+      - name: Check out release
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          ref: ${{ github.event.release.tag_name }}
 
-      
-      - name: Find previous release
-        id: previous
+      - name: Prepare application package
         shell: bash
         run: |
-          CURRENT="${GITHUB_REF_NAME}"
+          mkdir -p update/application
 
-          PREVIOUS=$(git tag --sort=-version:refname \
-            | grep -Fxv "$CURRENT" \
-            | head -n 1 || true)
+          cp -r backend update/application/
+          cp -r frontend update/application/
 
-          echo "previous=$PREVIOUS" >> "$GITHUB_OUTPUT"
+          # Remove development dependencies for now
+          rm -rf update/application/backend/node_modules
 
-          if [ -z "$PREVIOUS" ]; then
-            echo "First release detected. A full application package will be built."
-          else
-            echo "Previous release: $PREVIOUS"
-          fi
+          cat > update/application/version.json << EOF
+          {
+            "version": "${GITHUB_REF_NAME#v}",
+            "releaseDate": "$(date -u +%Y-%m-%d)"
+          }
+          EOF
 
-      - name: Build update package
-        shell: bash
+      - name: Create ZIP
         run: |
-          mkdir -p update/application/backend
-          mkdir -p update/application/frontend
-
-          CURRENT="${GITHUB_REF_NAME}"
-          PREVIOUS="${{ steps.previous.outputs.previous }}"
-
-          if [ -z "$PREVIOUS" ]; then
-            echo "No previous release found. Building a full application package."
-            git archive "$CURRENT" backend frontend \
-              | tar -x -C update
-            find update/backend update/frontend \
-              -type d -name node_modules -prune -exec rm -rf {} +
-            mkdir -p update/application
-            mv update/backend update/application/
-            mv update/frontend update/application/
-          else
-            echo "Comparing $PREVIOUS with $CURRENT"
-
-            git diff --name-status "$PREVIOUS" "$CURRENT" \
-              -- backend frontend > changes.txt
-
-            while IFS=$'\t' read -r STATUS FILE OLD_FILE; do
-              case "$FILE" in
-                */node_modules/*) continue ;;
-              esac
-
-              if [[ "$STATUS" == "D" ]]; then
-                echo "$FILE" >> update/deleted-files.txt
-                continue
-              fi
-
-              mkdir -p "update/application/$(dirname "$FILE")"
-              git show "$CURRENT:$FILE" > "update/application/$FILE"
-            done < changes.txt
-          fi
-
-          if [ -f update/deleted-files.txt ]; then
-            sed -i 's|^backend/|application/backend/|' update/deleted-files.txt
-            sed -i 's|^frontend/|application/frontend/|' update/deleted-files.txt
-          fi
-
-          if [ -f "portable-test/application/version.json" ]; then
-            cp portable-test/application/version.json update/application/
-          fi
-
           cd update
-          zip -r "../CollectionManager-${CURRENT}.zip" .
+          zip -r "../CollectionManager-${GITHUB_REF_NAME}.zip" application
 
-      - name: Attach update package to release
+      - name: Attach ZIP to release
         uses: softprops/action-gh-release@v2
         with:
           files: CollectionManager-*.zip
