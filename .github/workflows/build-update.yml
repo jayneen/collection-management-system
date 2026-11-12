@@ -10,36 +10,53 @@ permissions:
 
 jobs:
   build-update:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
 
     steps:
       - name: Check out release
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           ref: ${{ github.event.release.tag_name }}
 
+      - name: Set up Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: 24
+
+      - name: Install production dependencies
+        working-directory: backend
+        run: npm ci --omit=dev
+
       - name: Prepare application package
-        shell: bash
+        shell: pwsh
         run: |
-          mkdir -p update/application
+          New-Item -ItemType Directory -Force -Path "update/application/backend"
+          New-Item -ItemType Directory -Force -Path "update/application/frontend"
 
-          cp -r backend update/application/
-          cp -r frontend update/application/
+          # Copy backend, including the newly installed node_modules
+          Get-ChildItem -LiteralPath "backend" -Force |
+            Copy-Item -Destination "update/application/backend" -Recurse -Force
 
-          # Remove development dependencies for now
-          rm -rf update/application/backend/node_modules
+          # Copy frontend
+          Get-ChildItem -LiteralPath "frontend" -Force |
+            Copy-Item -Destination "update/application/frontend" -Recurse -Force
 
-          cat > update/application/version.json << EOF
-          {
-            "version": "${GITHUB_REF_NAME#v}",
-            "releaseDate": "$(date -u +%Y-%m-%d)"
-          }
-          EOF
+          # Create version information
+          $Version = $env:GITHUB_REF_NAME.TrimStart("v")
+          $ReleaseDate = (Get-Date).ToUniversalTime().ToString("yyyy-MM-dd")
+
+          @{
+            version = $Version
+            releaseDate = $ReleaseDate
+          } | ConvertTo-Json | Set-Content "update/application/version.json"
 
       - name: Create ZIP
+        shell: pwsh
         run: |
-          cd update
-          zip -r "../CollectionManager-${GITHUB_REF_NAME}.zip" application
+          Compress-Archive `
+            -Path "update/application" `
+            -DestinationPath "CollectionManager-$env:GITHUB_REF_NAME.zip" `
+            -CompressionLevel Optimal
 
       - name: Attach ZIP to release
         uses: softprops/action-gh-release@v2
