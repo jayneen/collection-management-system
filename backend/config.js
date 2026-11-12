@@ -1,39 +1,13 @@
-// ----------------------------------------------
-// TCSS 460: Summer 2025
-// MySQL Coonfiguration: Backend
-// ----------------------------------------------
-// Code is based on the 
-// Node.js for MySQL Library:
-// https://github.com/mysqljs/mysql
-// ----------------------------------------------
-
-// ----------------------------------------------
-// (A) Import the MySQL module or library
-// ----------------------------------------------
 const mysql = require("mysql2");
 
-// ----------------------------------------------
-// (B) Configure the connection options for MySQL
-//     The database name is: 'washingtondb'
-//     This is the database that we have created 
-//     in Part I.B using phpMyAdmin via XAMPP. 
-// ----------------------------------------------
-// ###### username and password must match ######
-// ----------------------------------------------
-// Ensure username and password match thoe ones
-// identified using phpMyAdmin when creating 
-// the testuser account. We are using  default 
-// tport hat is created by XAMPP for MySQL: 3306.
-// ----------------------------------------------
 const mysqlConfig = {
-    host: process.env.DB_HOST || "localhost",
-    port: process.env.DB_PORT || 3306,
-    user: process.env.DB_USERNAME,
-    password: process.env.DB_PASSWORD,
-    database: "game_collection",
-    debug: false // Connection debugging mode is ON
+    host: process.env.DB_HOST || "127.0.0.1",
+    port: Number(process.env.DB_PORT || 3306),
+    user: process.env.DB_USERNAME || "root",
+    password: process.env.DB_PASSWORD || "",
+    database: process.env.DB_NAME || "game_collection",
+    debug: false
 };
-
 // ----------------------------------------------
 // (C) Establishing connection using the options
 //     defined in mySQLConfig (without a query)
