@@ -18,15 +18,24 @@ jobs:
         with:
           fetch-depth: 0
 
+      
       - name: Find previous release
         id: previous
         shell: bash
         run: |
           CURRENT="${GITHUB_REF_NAME}"
+
           PREVIOUS=$(git tag --sort=-version:refname \
-            | grep -v "^${CURRENT}$" | head -n 1)
+            | grep -Fxv "$CURRENT" \
+            | head -n 1 || true)
 
           echo "previous=$PREVIOUS" >> "$GITHUB_OUTPUT"
+
+          if [ -z "$PREVIOUS" ]; then
+            echo "First release detected. A full application package will be built."
+          else
+            echo "Previous release: $PREVIOUS"
+          fi
 
       - name: Build update package
         shell: bash
