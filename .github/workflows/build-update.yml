@@ -92,7 +92,7 @@ jobs:
             "game_collection.sql" `
             "update/database/game_collection.sql"
 
-        - name: Create ZIP
+      - name: Create ZIP
         shell: pwsh
         run: |
           Compress-Archive `
