@@ -67,14 +67,21 @@ jobs:
             "node-extracted/node-$NodeVersion-win-x64/node.exe" `
             "update/runtime/node/node.exe"
 
+      
       - name: Download portable MySQL runtime
         shell: pwsh
         run: |
           $MySQLVersion = "8.4.13"
           $Archive = "mysql-$MySQLVersion-winx64.zip"
-          $Url = "https://dev.mysql.com/get/Downloads/MySQL-8.4/$Archive"
+          $Url = "https://cdn.mysql.com/Downloads/MySQL-8.4/$Archive"
+
+          Write-Host "Downloading MySQL $MySQLVersion..."
 
           Invoke-WebRequest -Uri $Url -OutFile $Archive
+
+          if ((Get-Item $Archive).Length -lt 100000000) {
+            throw "MySQL download appears incomplete or invalid."
+          }
 
           Expand-Archive -Path $Archive -DestinationPath "mysql-extracted"
 
@@ -82,6 +89,9 @@ jobs:
 
           Get-ChildItem -LiteralPath "mysql-extracted/mysql-$MySQLVersion-winx64" -Force |
             Copy-Item -Destination "update/runtime/mysql" -Recurse -Force
+
+          Write-Host "MySQL runtime packaged successfully."
+          
 
       - name: Include database setup file
         shell: pwsh
