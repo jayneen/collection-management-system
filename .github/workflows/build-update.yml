@@ -117,11 +117,23 @@ jobs:
             "game_collection.sql" `
             "update/database/game_collection.sql"
 
+      
+      - name: Include application launchers
+        shell: pwsh
+        run: |
+          Copy-Item "Start Collection Manager.ps1" "update/"
+          Copy-Item "Start Collection Manager.bat" "update/"
+
+
       - name: Create ZIP
         shell: pwsh
         run: |
-          Compress-Archive `
-            -Path "update/application", "update/runtime", "update/database" `
+          Compress-Archive -Path `
+            "update/application", `
+            "update/runtime", `
+            "update/database", `
+            "update/Start Collection Manager.ps1", `
+            "update/Start Collection Manager.bat" `
             -DestinationPath "CollectionManager-$env:GITHUB_REF_NAME.zip" `
             -CompressionLevel Optimal
 
