@@ -110,7 +110,7 @@ try {
 
     Write-Host "MySQL is ready."
 
-    # Set the initial MySQL root password on first launch
+    # Initial MySQL root password setup and database creation
     if ($FirstLaunch) {
         Write-Host "Setting up the database password..."
 
@@ -125,10 +125,9 @@ try {
         }
 
         Write-Host "Database password configured."
-    }
 
-    # Create the application database
-    if ($FirstLaunch) {
+
+        # Create the application database
         Write-Host "Creating the game_collection database..."
 
         & (Join-Path $MySQL "bin\mysql.exe") `
