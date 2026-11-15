@@ -1,16 +1,12 @@
 body {
+  padding: 2rem 0;
   width: 85%;
   margin: 0 auto;
+  visibility: hidden;
 }
 
-h2,
-h4 {
-  font-weight: bold;
-  color: black;
-}
-
-h2 {
-  padding-left: 10px;
+body.components-loaded {
+    visibility: visible;
 }
 
 table {

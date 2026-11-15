@@ -1,34 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-    <meta charset="UTF-8" />
-    <title>Collection Manager</title>
-    <link href="https://stackpath.bootstrapcdn.com/bootswatch/4.5.2/sketchy/bootstrap.min.css" rel="stylesheet">
-    <link href="css/styles.css" rel="stylesheet">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
-</head>
+<div id="header"></div>
 
 <body>
-    <h2 class="mt-5 mb-3">TCSS460: Assignment 3 - Video Game Memoriabilia Manager</h2>
-    <nav class="flex-column align-items-start">
-        <div class="container">
-            <ul class="nav nav-tabs nav-fill">
-                <li class="nav-item"><a class="nav-link active" href="viewGames.html">View</a></li>
-                <li class="nav-item"><a class="nav-link" href="addGameCopy.html">Add</a></li>
-            </ul>
-        </div>
-    </nav>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="js/menu.js"></script>
+    <script src="js/components.js"></script>
+
+    <div id="navigation"></div>
+
+
     <div class="container mb-5 pb-5">
-        <nav class="flex-column align-items-start">
-            <div class="container">
-                <ul class="nav nav-pills">
-                    <li class="nav-item"><a class="nav-link active" href="viewGames.html">Games</a></li>
-                    <li class="nav-item"><a class="nav-link" href="viewConsoles.html">Consoles</a></li>
-                </ul>
-            </div>
-        </nav>
+        <div id="viewNav"></div>
 
         <h4>View All Games</h4>
         <input type="text" id="search" class="form-control mb-3" placeholder="Search by name...">

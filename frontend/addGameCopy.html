@@ -1,85 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-    <meta charset="UTF-8" />
-    <title>Create Record</title>
-    <link href="https://stackpath.bootstrapcdn.com/bootswatch/4.5.2/sketchy/bootstrap.min.css" rel="stylesheet">
-    <link href="css/styles.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
-</head>
+<div id="header"></div>
 
 <body>
-    <h2 class="mt-5 mb-3">TCSS460: Assignment 3 - Video Game Memoriabilia Manager</h2>
-    <nav class="flex-column align-items-start">
-        <div class="container">
-            <ul class="nav nav-tabs nav-fill">
-                <li class="nav-item"><a class="nav-link" href="viewGames.html">View</a></li>
-                <li class="nav-item"><a class="nav-link active" href="addGameCopy.html">Add</a></li>
-            </ul>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="js/menu.js"></script>
+    <script src="js/components.js"></script>
+
+    <div id="navigation"></div>
+    <div id="addNav"></div>
+
+    <h4>Add a Game Copy</h4>
+    <form id="create-form">
+        <!-- Game Name Selector -->
+        <div class="form-group">
+            <label for="gameName">Game Name</label>
+            <select class="form-control" name="gameName" id="gameNameSelect">
+                <option value="">Select game name</option>
+            </select>
         </div>
-    </nav>
-    <div class="container mb-5 pb-5">
-        <nav class="flex-column align-items-start">
-            <div class="container">
-                <ul class="nav nav-pills">
-                    <li class="nav-item"><a class="nav-link active" href="addGameCopy.html">Game Copy</a></li>
-                    <li class="nav-item"><a class="nav-link" href="addGameName.html">Game Name</a></li>
-                    <li class="nav-item"><a class="nav-link" href="addConsoleCopy.html">Console Copy</a></li>
-                    <li class="nav-item"><a class="nav-link" href="addConsoleModel.html">Console Model</a></li>
-                </ul>
-            </div>
-        </nav>
-        <h4>Add a Game Copy</h4>
-        <form id="create-form">
-            <!-- Game Name Selector -->
-            <div class="form-group">
-                <label for="gameName">Game Name</label>
-                <select class="form-control" name="gameName" id="gameNameSelect">
-                    <option value="">Select game name</option>
-                </select>
-            </div>
 
-            <div class="input-group-text">
-                <input type="checkbox" title="Add new game" />
-            </div>
+        <div class="input-group-text">
+            <input type="checkbox" title="Add new game" />
+        </div>
 
-            <!-- Region -->
-            <div class="form-group">
-                <label for="regionInput">Region</label>
-                <input type="text" class="form-control" id="regionInput" name="region" placeholder="Enter a region">
-            </div>
+        <!-- Region -->
+        <div class="form-group">
+            <label for="regionInput">Region</label>
+            <input type="text" class="form-control" id="regionInput" name="region" placeholder="Enter a region">
+        </div>
 
-            <!-- Condition Selector -->
-            <div class="form-group">
-                <label for="condition">Condition</label>
-                <select class="form-control" name="condition" id="conditionSelect">
-                    <option value="">Select condition</option>
-                </select>
-            </div>
+        <!-- Condition Selector -->
+        <div class="form-group">
+            <label for="condition">Condition</label>
+            <select class="form-control" name="condition" id="conditionSelect">
+                <option value="">Select condition</option>
+            </select>
+        </div>
 
-            <!-- Seal or CIB Selector -->
-            <div class="form-group">
-                <label for="sealOrCIB">Seal or CIB</label>
-                <select class="form-control" name="sealOrCIB" id="sealOrCIBSelect">
-                    <option value="">Select option</option>
-                </select>
-            </div>
+        <!-- Seal or CIB Selector -->
+        <div class="form-group">
+            <label for="sealOrCIB">Seal or CIB</label>
+            <select class="form-control" name="sealOrCIB" id="sealOrCIBSelect">
+                <option value="">Select option</option>
+            </select>
+        </div>
 
-            <!-- Notes -->
-            <div class="form-group">
-                <label for="notesInput">Notes</label>
-                <textarea class="form-control" id="notesInput" name="notes" rows="4"
-                    placeholder="Enter notes here..."></textarea>
-            </div>
+        <!-- Notes -->
+        <div class="form-group">
+            <label for="notesInput">Notes</label>
+            <textarea class="form-control" id="notesInput" name="notes" rows="4"
+                placeholder="Enter notes here..."></textarea>
+        </div>
 
-            <button type="submit" class="btn btn-success">Add Game</button>
-        </form>
-        <div id="create-msg"></div>
-        <script src="js/addGameCopy.js"></script>
+        <button type="submit" class="btn btn-success">Add Game</button>
+    </form>
+    <div id="create-msg"></div>
+    <script src="js/addGameCopy.js"></script>
 
     </div>
     </div>
