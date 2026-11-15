@@ -181,11 +181,11 @@ try {
 
     # Open the application in the default browser
     Start-Sleep -Seconds 2
-    Start-Process "http://localhost:2000/viewGames.html"
+    Start-Process "http://localhost:2000/menu.html"
 
     Write-Host ""
     Write-Host "Collection Manager is running."
-    Write-Host "Open http://localhost:2000/viewGames.html"
+    Write-Host "Open http://localhost:2000/menu.html"
     Write-Host "Press Ctrl+C here to stop."
     Write-Host ""
 
