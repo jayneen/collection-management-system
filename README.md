@@ -4,16 +4,14 @@ This is a fullstack portable application for game collection management. It is d
 ### Running the Application
 To start the application download the zip from the latest release, extract the files, and run the .bat script. This repository packages the required MySQL and Node.js runtimes making the application fully self-contained and requiring no additional set up.
 
-### Architecture
-- **Frontend:** HTML, CSS, Bootstrap, JavaScript, and jQuery provide the user interface and handle client-side interactions.
-- **Backend:** Node.js and Express provide the web server and REST API endpoints for managing collection data.
-- **Database:** MySQL stores the collection data, with relationships, constraints, and triggers maintaining data integrity.
-- **API Communication:** AJAX requests allow the frontend to communicate asynchronously with the backend.
-- **Containerization:** Docker Compose provides a consistent development environment for the backend and MySQL database.
-- **Deployment:** The application is packaged as a portable Windows application, bundling its own Node.js and MySQL runtimes so it can run without requiring these dependencies to be installed on the target computer.
+### Tech Stack
+- **Frontend:** HTML, CSS, Bootstrap, JavaScript, jQuery.
+- **Backend:** Node.js, Express, Docker.
+- **Database:** MySQL.
+- **Development Environment:** Docker Desktop, Docker Compose, WSL 2.
+- **Deployment:** Portable Windows application bundling Node.js and MySQL runtimes.
 
 ## Development
-
 ### Prerequisites
 The following software is required to develop and run the application locally:
 - Node.js – Version 24.x (includes npm).
