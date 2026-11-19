@@ -1,15 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<div id="header"></div>
-
 <body>
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>View Games</title>
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link href="css/styles.css" rel="stylesheet">
+    </head>
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="js/menu.js"></script>
     <script src="js/components.js"></script>
 
-    <div id="navigation"></div>
-    <div id="addNav"></div>
+    <div data-include="components/navigation.html"></div>
+    <div data-include="components/addNav.html"></div>
 
     <h4>Add a Console Copy</h4>
     <form id="create-form">

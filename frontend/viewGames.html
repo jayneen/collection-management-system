@@ -1,21 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<div id="header"></div>
-
 <body>
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>View Games</title>
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link href="css/styles.css" rel="stylesheet">
+    </head>
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="js/menu.js"></script>
     <script src="js/components.js"></script>
 
-    <div id="navigation"></div>
+    <div data-include="components/navigation.html"></div>
 
-
-    <div class="container mb-5 pb-5">
-        <div id="viewNav"></div>
+    <div class="container">
+        <div data-include="components/viewNav.html"></div>
 
         <h4>View All Games</h4>
-        <input type="text" id="search" class="form-control mb-3" placeholder="Search by name...">
+        <div data-include="components/searchBar.html"></div>
         <table class="table" id="tbl">
             <thead>
                 <tr>
