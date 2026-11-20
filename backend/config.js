@@ -6,14 +6,16 @@ const mysqlConfig = {
     user: process.env.DB_USERNAME || "root",
     password: process.env.DB_PASSWORD || "",
     database: process.env.DB_NAME || "game_collection",
-    debug: false
+    waitForConnections: true,
+    connectionLimit: 10,
+    queueLimit: 0,
+    enableKeepAlive: true
 };
-// ----------------------------------------------
-// (C) Establishing connection using the options
-//     defined in mySQLConfig (without a query)
-// ----------------------------------------------
-const dbConnection = mysql.createConnection(mysqlConfig);
-dbConnection.connect(function (err) {
+
+// A pool creates connections on demand and replaces broken ones
+const dbConnection = mysql.createPool(mysqlConfig);
+
+dbConnection.getConnection(function (err, connection) {
     // unsucessful: handle any errors that might occur during connection
     if (err) {
         console.error('Opps. There was an error connecting to the database: ', err.stack);
@@ -21,6 +23,7 @@ dbConnection.connect(function (err) {
     }
     // successful: output on the screen a message that connection was successful
     console.log('Backend is now connected to: ' + dbConnection.config.database + '.');
+    connection.release();
 });
 
 // ----------------------------------------------
