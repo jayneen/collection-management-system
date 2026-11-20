@@ -51,25 +51,37 @@ const server = app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
 });
 
+if (process.env.ENABLE_SHUTDOWN === "true") {
+    app.post("/shutdown", (req, res) => {
+        res.set("Connection", "close");
+        res.json({ Success: "Shutting down..." });
+        res.on("finish", shutdown);
+    });
+}
+
 // Shut down the backend and its database connection cleanly
 let shuttingDown = false;
 
 function shutdown() {
     if (shuttingDown) return;
     shuttingDown = true;
-
     console.log("Shutting down backend...");
+
+    // Fallback if something hangs. Exit 0 because this is intentional
+    setTimeout(() => {
+        console.log("Forcing exit.");
+        process.exit(0);
+    }, 3000).unref();
 
     server.close(() => {
         dbConnection.end((err) => {
-            if (err) {
-                console.error("Error closing database connection:", err);
-                process.exitCode = 1;
-            }
-
+            if (err) console.error("Error closing database connection:", err);
             console.log("Backend stopped cleanly.");
+            process.exit(0);
         });
     });
+
+    server.closeAllConnections?.();   // Node 18.2+, drops keep-alive connections too
 }
 
 process.on("SIGINT", shutdown);
