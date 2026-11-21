@@ -1,7 +1,7 @@
 function loadTable(filter) {
-  let url = 'http://127.0.0.1:2000/games';
+  let url = '/games';
   if (filter) {
-     url += '?name=' + encodeURIComponent(filter);
+    url += '?name=' + encodeURIComponent(filter);
   }
 
   $.get(url, function (data) {
@@ -15,7 +15,7 @@ function loadTable(filter) {
 
     let html = rows.map(r => {
       let notes = r.Notes;
-      if(notes === null) notes = "";
+      if (notes === null) notes = "";
       let cond = r.SealOrCIB;
       if (cond === "Neither") cond = "";
 
@@ -60,7 +60,7 @@ $(function () {
   $('#confirmDel').click(function () {
     const uid = $(this).data('uid');
     $.ajax({
-      url: 'http://localhost:2000/games/' + encodeURIComponent(uid),
+      url: '/games/' + encodeURIComponent(uid),
       method: 'DELETE',
       success: () => {
         alert("Record deleted successfully!");

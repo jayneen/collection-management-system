@@ -1,7 +1,7 @@
 $(function () {
     // suggestions with free entry
-    setupAutocomplete('#modelNameInput', 'http://localhost:2000/options/consoles');
-    setupAutocomplete('#consolePublisherInput', 'http://localhost:2000/options/consolepublishers');
+    setupAutocomplete('#modelNameInput', '/options/consoles');
+    setupAutocomplete('#consolePublisherInput', '/options/consolepublishers');
     
 
     // submission
@@ -21,7 +21,7 @@ $(function () {
 
 
         $.ajax({
-            url: 'http://localhost:2000/consoles/consolemodels',
+            url: '/consoles/consolemodels',
             method: 'POST',
             contentType: 'application/json',
             data: JSON.stringify(formData),

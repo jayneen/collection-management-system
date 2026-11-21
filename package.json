@@ -1,0 +1,30 @@
+{
+  "name": "collection-management-system",
+  "version": "1.0.0",
+  "description": "This is a fullstack portable application for game collection management. It is designed to help keep track of a video game memorabilia collection and all adjacent items. While current iteration provides features like searching, editing, adding, and deleting records of physical copies of video games and consoles, the underlying database offers a wider range of relations that will be implemented in future versions.",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "dev": "electronmon ."
+  },
+  "electronmon": {
+    "patterns": [
+      "!**/*.db",
+      "!**/*.db-*"
+    ]
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@electron/rebuild": "^4.2.1",
+    "electron": "^45.4.1",
+    "electronmon": "^2.0.4"
+  },
+  "dependencies": {
+    "better-sqlite3": "^13.2.0",
+    "cors": "^2.8.6",
+    "express": "^5.3.0",
+    "mysql2": "^3.24.6"
+  }
+}

@@ -4,11 +4,11 @@ $(function () {
     const modelName = params.get('modelName');
     
     $.when(
-        populateDropdown('http://localhost:2000/options/conditions', '#conditionSelect'),
-        populateDropdown('http://localhost:2000/options/sealorcibs', '#sealOrCIBSelect')
+        populateDropdown('/options/conditions', '#conditionSelect'),
+        populateDropdown('/options/sealorcibs', '#sealOrCIBSelect')
     ).done(() => {
         if (uid) {
-            $.get(`http://localhost:2000/consoles/${encodeURIComponent(uid)}`, function (data) {
+            $.get(`/consoles/${encodeURIComponent(uid)}`, function (data) {
                 if (data.length > 0) {
                     const r = data[0];
                     $('#conditionSelect').val(r.Condition || "");
@@ -42,7 +42,7 @@ $(function () {
             });
 
             $.ajax({
-                url: 'http://localhost:2000/consoles',
+                url: '/consoles',
                 method: 'PUT',
                 contentType: 'application/json',
                 data: JSON.stringify(formData),

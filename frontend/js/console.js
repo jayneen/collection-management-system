@@ -4,7 +4,7 @@ function getParam(paramName) {
 
 $(function () {
   const uid = getParam('uid');
-  $.get('http://localhost:2000/consoles/' + encodeURIComponent(uid), function (data) {
+  $.get('/consoles/' + encodeURIComponent(uid), function (data) {
     if (data.length) {
       const r = data[0];
       let notes = r.Notes;

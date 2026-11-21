@@ -1,5 +1,5 @@
 function loadTable(filter) {
-  let url = 'http://127.0.0.1:2000/consoles';
+  let url = '/consoles';
   if (filter) {
     url += '?name=' + encodeURIComponent(filter);
   }
@@ -60,7 +60,7 @@ $(function () {
   $('#confirmDel').click(function () {
     const uid = $(this).data('uid');
     $.ajax({
-      url: 'http://localhost:2000/consoles/' + encodeURIComponent(uid),
+      url: '/consoles/' + encodeURIComponent(uid),
       method: 'DELETE',
       success: () => {
         alert("Record deleted successfully!");

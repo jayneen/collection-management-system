@@ -45,44 +45,22 @@ app.use("/games", gamesRoutes);
 app.use("/consoles", consolesRoutes);
 app.use("/options", optionsRoutes);
 
-const PORT = process.env.PORT || 2000;
-
-const server = app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
-});
-
-if (process.env.ENABLE_SHUTDOWN === "true") {
-    app.post("/shutdown", (req, res) => {
-        res.set("Connection", "close");
-        res.json({ Success: "Shutting down..." });
-        res.on("finish", shutdown);
+function startServer(port = process.env.PORT || 2000) {
+    return new Promise((resolve) => {
+        const server = app.listen(port, "127.0.0.1", () => resolve(server));
     });
 }
 
-// Shut down the backend and its database connection cleanly
-let shuttingDown = false;
-
-function shutdown() {
-    if (shuttingDown) return;
-    shuttingDown = true;
-    console.log("Shutting down backend...");
-
-    // Fallback if something hangs. Exit 0 because this is intentional
-    setTimeout(() => {
-        console.log("Forcing exit.");
-        process.exit(0);
-    }, 3000).unref();
-
-    server.close(() => {
-        dbConnection.end((err) => {
-            if (err) console.error("Error closing database connection:", err);
-            console.log("Backend stopped cleanly.");
-            process.exit(0);
-        });
+function stopServer(server) {
+    return new Promise((resolve) => {
+        server.closeAllConnections?.();
+        server.close(() => dbConnection.end(() => resolve()));
     });
-
-    server.closeAllConnections?.();   // Node 18.2+, drops keep-alive connections too
 }
 
-process.on("SIGINT", shutdown);
-process.on("SIGTERM", shutdown);
+module.exports = { startServer, stopServer };
+
+// Still works as `node index.js` for debugging
+if (require.main === module) {
+    startServer().then(() => console.log("Server is running"));
+}

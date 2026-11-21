@@ -1,14 +1,14 @@
 $(function () {
     // suggestions with free entry
-    setupAutocomplete('#gameNameInput', 'http://localhost:2000/options/gamenames');
+    setupAutocomplete('#gameNameInput', '/options/gamenames');
 
     // selectors
-    populateDropdown('http://localhost:2000/options/ratings', '#ratingSelect');
+    populateDropdown('/options/ratings', '#ratingSelect');
 
     // suggestions with free entry and infinite "add another"
-    createDynamicInput('#genreContainer', 'http://localhost:2000/options/genres', 'genre');
-    createDynamicInput('#seriesContainer', 'http://localhost:2000/options/series', 'series');
-    createDynamicInput('#consoleContainer', 'http://localhost:2000/options/consoles', 'consoles');
+    createDynamicInput('#genreContainer', '/options/genres', 'genre');
+    createDynamicInput('#seriesContainer', '/options/series', 'series');
+    createDynamicInput('#consoleContainer', '/options/consoles', 'consoles');
 
     // submission
     $('#create-form').submit(function (e) {
@@ -28,7 +28,7 @@ $(function () {
 
 
         $.ajax({
-            url: 'http://localhost:2000/games/gamenames',
+            url: '/games/gamenames',
             method: 'POST',
             contentType: 'application/json',
             data: JSON.stringify(formData),

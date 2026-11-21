@@ -10,6 +10,9 @@ node_modules/
 # Logs
 *.log
 
+# Database files
+*.db
+
 todo.txt
 
 portable-test

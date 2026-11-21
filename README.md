@@ -6,17 +6,13 @@ To start the application download the zip from the latest release, extract the f
 
 ### Tech Stack
 - **Frontend:** HTML, CSS, Bootstrap, JavaScript, jQuery.
-- **Backend:** Node.js, Express, Docker.
-- **Database:** MySQL.
-- **Development Environment:** Docker Desktop, Docker Compose, WSL 2.
-- **Deployment:** Portable Windows application bundling Node.js and MySQL runtimes.
+- **Backend:** Node.js, Express, Electron.
+- **Database:** SQLite.
 
 ## Development
 ### Prerequisites
 The following software is required to develop and run the application locally:
 - Node.js – Version 24.x (includes npm).
-- MySQL Server – Version 8.4.x.
-- Docker Compose - Version 2.x.
 
 ### Environment Variables
 Create a `.env` file based on `.env.example`.
@@ -24,8 +20,6 @@ Create a `.env` file based on `.env.example`.
 | Variable | Description |
 |---|---|
 | `DB-USERNAME` | Database account username |
-| `DB-PASSWORD` | Password associated with the database account |
-| `DB-ROOT-PASSWORD` | Root account password |
 
 ### Installation
 Clone and set up the repository:
@@ -50,10 +44,7 @@ The current version does not support live updates, in-application shut down, and
 ### Libraries and Frameworks
 - [Node.js](https://nodejs.org/) — JavaScript runtime for the backend.
 - [Express](https://expressjs.com/) — Web framework for handling API routes and serving the frontend.
-- [MySQL](https://www.mysql.com/) — Relational database for storing collection data.
-- [MySQL2](https://github.com/sidorares/node-mysql2) — MySQL client for Node.js.
 - [jQuery](https://jquery.com/) — DOM manipulation, event handling, and AJAX requests.
 - [Bootstrap](https://getbootstrap.com/) — Responsive UI components and styling.
 - [Bootswatch](https://bootswatch.com/) — Bootstrap themes and visual styling.
 - [Nodemon](https://nodemon.io/) — Automatically restarts the backend during development.
-- [Docker](https://www.docker.com/) — Containerization for the development environment.

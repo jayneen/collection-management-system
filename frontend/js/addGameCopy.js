@@ -1,11 +1,11 @@
 $(function () {
   // suggestions with free entry
-  setupAutocomplete('#regionInput', 'http://localhost:2000/options/regions');
+  setupAutocomplete('#regionInput', '/options/regions');
 
   // selectors
-  populateDropdown('http://localhost:2000/options/gamenames', '#gameNameSelect');
-  populateDropdown('http://localhost:2000/options/conditions', '#conditionSelect');
-  populateDropdown('http://localhost:2000/options/sealorcibs', '#sealOrCIBSelect');
+  populateDropdown('/options/gamenames', '#gameNameSelect');
+  populateDropdown('/options/conditions', '#conditionSelect');
+  populateDropdown('/options/sealorcibs', '#sealOrCIBSelect');
 
   // submission
   $('#create-form').submit(function (e) {
@@ -24,7 +24,7 @@ $(function () {
     });
 
     $.ajax({
-      url: 'http://localhost:2000/games',
+      url: '/games',
       method: 'POST',
       contentType: 'application/json',
       data: JSON.stringify(formData),

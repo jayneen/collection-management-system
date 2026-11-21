@@ -1,33 +1,30 @@
-const mysql = require("mysql2");
+const Database = require("better-sqlite3");
+const path = require("path");
+const fs = require("fs");
 
-const mysqlConfig = {
-    host: process.env.DB_HOST || "127.0.0.1",
-    port: Number(process.env.DB_PORT || 3306),
-    user: process.env.DB_USERNAME || "root",
-    password: process.env.DB_PASSWORD || "",
-    database: process.env.DB_NAME || "game_collection",
-    waitForConnections: true,
-    connectionLimit: 10,
-    queueLimit: 0,
-    enableKeepAlive: true
-};
+const dbPath = process.env.DB_PATH || path.join(__dirname, "game_collection.db");
+fs.mkdirSync(path.dirname(dbPath), { recursive: true });
 
-// A pool creates connections on demand and replaces broken ones
-const dbConnection = mysql.createPool(mysqlConfig);
+const db = new Database(dbPath);
+db.pragma("journal_mode = WAL");
+db.pragma("foreign_keys = ON");
 
-dbConnection.getConnection(function (err, connection) {
-    // unsucessful: handle any errors that might occur during connection
-    if (err) {
-        console.error('Opps. There was an error connecting to the database: ', err.stack);
-        return;
+// First run: create tables from schema.sql
+if (!db.prepare("SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%'").get()) {
+    db.exec(fs.readFileSync(path.join(__dirname, "schema.sql"), "utf8"));
+}
+
+// Mimics mysql2's query(sql, params, cb) so routes need few changes
+function query(sql, params, cb) {
+    if (typeof params === "function") { cb = params; params = []; }
+    try {
+        const stmt = db.prepare(sql);
+        if (stmt.reader) return cb(null, stmt.all(params));
+        const info = stmt.run(params);
+        cb(null, { affectedRows: info.changes, insertId: info.lastInsertRowid });
+    } catch (err) {
+        cb(err);
     }
-    // successful: output on the screen a message that connection was successful
-    console.log('Backend is now connected to: ' + dbConnection.config.database + '.');
-    connection.release();
-});
+}
 
-// ----------------------------------------------
-// (D) This module exports dbConnection to be 
-//     used other files (e..g, index.js)
-// ----------------------------------------------
-module.exports = dbConnection;
+module.exports = { query, end: (cb) => { db.close(); cb && cb(); } };
