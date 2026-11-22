@@ -4,6 +4,8 @@ body {
   margin: 0 auto;
 }
 
+body:not(.components-loaded) { visibility: hidden; }
+
 table {
   width: 100%;
   table-layout: fixed;

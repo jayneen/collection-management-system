@@ -1,28 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Menu</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/styles.css" rel="stylesheet">
+</head>
+
 <body>
-
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Menu</title>
-        <link href="css/bootstrap.min.css" rel="stylesheet">
-        <link href="css/styles.css" rel="stylesheet">
-    </head>
-
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="js/menu.js"></script>
-    <script src="js/components.js"></script>
-
     <div class="text-center">
         <h2>Collection Management System</h2>
         <h3>Menu</h3>
         <div class="w-25 mx-auto d-flex flex-column align-items-stretch py-5" style="gap: 1rem;">
-            <button type="button" class="btn btn-primary" onclick="location.href='viewGames.html'">View Database</button>
-            <button type="button" class="btn btn-info">Check for Updates</button>
+            <button id="viewBtn" class="btn btn-secondary">View Database</button>
+            <button id="updateBtn" class="btn btn-info">Check for Updates</button>
             <button id="quitBtn" class="btn btn-danger">Quit</button>
         </div>
+
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="js/menu.js"></script>
+        <script src="js/components.js"></script>
+    </div>
 </body>
 
 </html>
