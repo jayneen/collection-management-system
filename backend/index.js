@@ -51,10 +51,19 @@ function startServer(port = process.env.PORT || 2000) {
     });
 }
 
+// runs automatically when all windows are closed
 function stopServer(server) {
     return new Promise((resolve) => {
+        console.log("Shutting down...");
         server.closeAllConnections?.();
-        server.close(() => dbConnection.end(() => resolve()));
+        server.close(() => {
+            console.log("HTTP server closed.");
+            dbConnection.end((err) => {
+                if (err) console.error("Error closing database:", err);
+                else console.log("Database closed.");
+                resolve();
+            });
+        });
     });
 }
 

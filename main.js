@@ -10,10 +10,14 @@ let server;
 let quitting = false;
 
 async function createWindow() {
+    console.log("Starting server...");
     server = await startServer(0);              // 0 = pick any free port
     const port = server.address().port;
 
     const win = new BrowserWindow({ width: 1200, height: 800 });
+    win.webContents.once("did-finish-load", () => {
+        console.log(`App is running on http://127.0.0.1:${port}`);
+    });
     win.loadURL(`http://127.0.0.1:${port}/menu.html`);
 
     // development live updates
@@ -25,7 +29,6 @@ async function createWindow() {
             clearTimeout(timer);                                  // editors fire several events per save
             timer = setTimeout(() => win.webContents.reloadIgnoringCache(), 100);
         });
-        win.webContents.openDevTools();                           // your F12 console
     }
 }
 
@@ -35,8 +38,9 @@ app.on("window-all-closed", () => app.quit());
 
 app.on("before-quit", async (event) => {
     if (quitting) return;
-    event.preventDefault();                     // finish cleanup first
+    event.preventDefault();
     quitting = true;
     if (server) await stopServer(server);
+    console.log("Shutdown complete.");
     app.quit();
 });
