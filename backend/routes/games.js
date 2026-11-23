@@ -61,7 +61,7 @@ router.get('/:uid', (request, response) => {
     Game_Has_a_Console.ModelName, 
     Game_Has_a_Series.Series, 
     Game_Has_a_Peripheral.PeripheralName,
-    GROUP_CONCAT(TRIM(Game_Has_Genres.Genre) SEPARATOR ', ') AS Genres,
+    GROUP_CONCAT(TRIM(Game_Has_Genres.Genre), ', ') AS Genres,
     Games.\`Condition\`,
     Games.SealOrCIB,
     Games.Notes
