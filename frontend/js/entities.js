@@ -24,8 +24,12 @@ const ENTITIES = {
             { label: 'Condition', value: r => [r.Condition, r.SealOrCIB === 'Neither' ? '' : r.SealOrCIB].filter(Boolean).join(' ') },
             { label: 'Notes', value: r => r.Notes ?? '' }
         ],
+        updateFields: [
+            { name: 'condition', label: 'Condition', type: 'select', optionsUrl: '/options/conditions', key: 'Condition' },
+            { name: 'sealOrCIB', label: 'Seal or CIB', type: 'select', optionsUrl: '/options/sealorcibs', key: 'SealOrCIB' },
+            { name: 'notes', label: 'Notes', type: 'textarea', key: 'Notes' }],
         viewUrl: r => `detail.html?type=games&uid=${encodeURIComponent(r.UID)}`,
-        editUrl: r => `updateGame.html?uid=${encodeURIComponent(r.UID)}`
+        editUrl: r => `update.html?type=games&uid=${encodeURIComponent(r.UID)}`
     },
     consoles: {
         title: 'Consoles',
@@ -37,7 +41,7 @@ const ENTITIES = {
             { label: 'UID', value: r => r.UID },
             { label: 'Model', value: r => r.ModelName },
             { label: 'Region', value: r => r.Region },
-            { label: 'Condition', value: r => r.Condition },
+            { label: 'Condition', value: r => [r.Condition, r.SealOrCIB === 'Neither' ? '' : r.SealOrCIB].filter(Boolean).join(' ') },
             { label: 'Modded', value: r => (r.isModded ? 'Yes' : 'No') },
             { label: 'Notes', value: r => r.Notes ?? '' }
         ],
@@ -45,12 +49,17 @@ const ENTITIES = {
             { label: 'UID', value: r => r.UID },
             { label: 'Model', value: r => r.ModelName },
             { label: 'Region', value: r => r.Region },
-            { label: 'Condition', value: r => r.Condition },
+            { label: 'Condition', value: r => [r.Condition, r.SealOrCIB === 'Neither' ? '' : r.SealOrCIB].filter(Boolean).join(' ') },
             { label: 'Seal / CIB', value: r => r.SealOrCIB },
             { label: 'Modded', value: r => (r.isModded ? 'Yes' : 'No') },
             { label: 'Notes', value: r => r.Notes ?? '' }
         ],
+        updateFields: [
+            { name: 'condition', label: 'Condition', type: 'select', optionsUrl: '/options/conditions', key: 'Condition' },
+            { name: 'sealOrCIB', label: 'Seal or CIB', type: 'select', optionsUrl: '/options/sealorcibs', key: 'SealOrCIB' },
+            { name: 'notes', label: 'Notes', type: 'textarea', key: 'Notes' },
+            { name: 'isModded', label: 'Modded', type: 'checkbox', key: 'isModded' }],
         viewUrl: r => `detail.html?type=consoles&uid=${encodeURIComponent(r.UID)}`,
-        editUrl: r => `updateConsole.html?uid=${encodeURIComponent(r.UID)}`
+        editUrl: r => `update.html?type=consoles&uid=${encodeURIComponent(r.UID)}`
     }
 };
